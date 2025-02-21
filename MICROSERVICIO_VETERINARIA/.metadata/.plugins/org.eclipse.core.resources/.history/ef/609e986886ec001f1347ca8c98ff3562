@@ -1,0 +1,5 @@
+package com.mx.Veterinarias.Service;
+
+public interface IVeterinariasService {
+
+}

@@ -1,0 +1,5 @@
+package com.mx.Veterinarias.Config;
+
+public class RestTemplateConfig {
+
+}

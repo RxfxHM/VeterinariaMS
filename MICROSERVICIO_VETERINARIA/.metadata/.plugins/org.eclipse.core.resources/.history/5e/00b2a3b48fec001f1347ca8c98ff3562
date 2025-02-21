@@ -1,0 +1,32 @@
+#Configuracion del servidor
+server.port=7000
+spring.application.name=MS-ApiGateway
+
+#Configuracion de Eureka Discovery Client
+eureka.instance.hostname=localhost
+eureka.client.service-url.defaultZone=http://localhost:9000/eureka
+
+#Configuracion de los path de cada uno de los microservicios
+
+#Configuracion clientes
+spring.cloud.gateway.mvc.routes[0].id=MS-CLIENTES
+spring.cloud.gateway.mvc.routes[0].uri=http://localhost:8009
+spring.cloud.gateway.mvc.routes[0].predicates[0]=Path=/CLIENTES/**
+
+#Configuracion empleados
+spring.cloud.gateway.mvc.routes[1].id=MS-EMPLEADOS
+spring.cloud.gateway.mvc.routes[1].uri=http://localhost:8001
+spring.cloud.gateway.mvc.routes[1].predicates[0]=Path=/empleados/**
+#El indice de predicates se cambia si queremos obtener mas path, pero podemos acceder a todos con los asteriscos
+
+#Configuracion Proveedores
+spring.cloud.gateway.mvc.routes[2].id=MS-PROVEEDORES
+spring.cloud.gateway.mvc.routes[2].uri=http://localhost:9003
+spring.cloud.gateway.mvc.routes[2].predicates[0]=Path=/Proveedores/**
+
+#Configuracion Tienda
+spring.cloud.gateway.mvc.routes[3].id=MS-TIENDA
+spring.cloud.gateway.mvc.routes[3].uri=http://localhost:8090
+spring.cloud.gateway.mvc.routes[3].predicates[0]=Path=/Tienda/**
+
+

@@ -1,0 +1,273 @@
+package com.mx.Veterinarias.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestTemplate;
+
+import com.mx.Veterinarias.Entity.Veterinarias;
+import com.mx.Veterinarias.FeignClients.IClientesFeign;
+import com.mx.Veterinarias.FeignClients.IMascotasFeign;
+import com.mx.Veterinarias.FeignClients.IResponsablesFeign;
+import com.mx.Veterinarias.Models.Clientes;
+import com.mx.Veterinarias.Models.Mascotas;
+import com.mx.Veterinarias.Models.Responsables;
+import com.mx.Veterinarias.Repository.IVeterinariasDao;
+
+@Service
+public class VeterinariasServiceImp implements IVeterinariasService{
+
+	
+	@Autowired
+	private IVeterinariasDao dao;
+	
+	//Inyeccion de dependencias de los FeignClient
+	@Autowired
+	private IResponsablesFeign responsablesFC;
+	@Autowired
+	private IMascotasFeign mascotasFC;
+	@Autowired
+	private IClientesFeign clientesFC;
+	
+	//Inyeccion del RestTemplate
+	@Autowired
+	private RestTemplate restTemplate;
+
+	@Override
+	public Veterinarias guardarVeterinaria(Veterinarias veterinaria) {
+		// TODO Auto-generated method stub
+		return dao.save(veterinaria);
+	}
+
+	@Override
+	public List<Veterinarias> listarVeterinarias() {
+		// TODO Auto-generated method stub
+		return dao.findAll(Sort.by(Direction.ASC,"idVeterinaria"));
+	}
+
+	@Override
+	public Veterinarias editarVterinarias(Veterinarias veterinaria) {
+		// TODO Auto-generated method stub
+		return dao.save(veterinaria);
+	}
+
+	@Override
+	public Veterinarias eliminarVeterinaria(Long idVeterinaria) {
+		// TODO Auto-generated method stub
+		Veterinarias aux = dao.findById(idVeterinaria).orElse(null);
+		if(aux != null) {
+			dao.delete(aux);
+			return aux;
+		}
+		return null;
+	}
+
+	@Override
+	public Veterinarias buscarVeterinaria(Long idVeterinaria) {
+		// TODO Auto-generated method stub
+		return dao.findById(idVeterinaria).orElse(null);
+	}
+	
+	//****************************Feign MS-RESPONSABLES ****************************************
+	public Responsables guardarResponsable(Responsables responsable) {
+		return responsablesFC.guardar(responsable);
+	}
+
+	public Responsables editarResponsables(Responsables responsable) {
+		return responsablesFC.editar(responsable);
+	}
+	
+	public Responsables eliminarResponsables(Long idResponsable) {
+		return responsablesFC.eliminar(idResponsable);
+	}
+	
+	public Responsables buscarResponsables(Long idResponsable) {
+		return responsablesFC.buscar(idResponsable);
+	}
+	
+	public List<Responsables> obtenerListaResponsablesPorVeterinaria(Long veterinariaId){
+		return responsablesFC.obtenerPorVeterinariaId(veterinariaId);
+	}
+	
+	//************************ restTemplate Responsables ********************************************
+	public Responsables saveResponsable(Responsables responsable) {
+		ResponseEntity<Responsables> nuevoResponsable = restTemplate.postForEntity("http://localhost:8002/Responsables/guardar", 
+				responsable, Responsables.class);
+		return nuevoResponsable.getBody();
+	}
+	
+	public Responsables editResponsables(Responsables responsable) {
+		ResponseEntity<Responsables> editar = restTemplate.exchange("http://localhost:8002/Responsables/editar", 
+				HttpMethod.PUT, 
+		        new HttpEntity<>(responsable), 
+		        Responsables.class
+		    );
+		return editar.getBody();
+	}
+	
+	public Responsables deleteResponsables(Long idResponsable) {
+		ResponseEntity<Responsables> response = restTemplate.exchange("http://localhost:8002/Responsables/eliminar/{idResponsable}",
+				HttpMethod.DELETE,
+				null,
+				Responsables.class, 
+				idResponsable);
+		return response.getBody();
+	}
+	
+	public Responsables findResponsables(Long idResponsable) {
+		return restTemplate.getForObject("http://localhost:8002/Responsables/buscar/{idResponsable}",Responsables.class, idResponsable);
+	}
+	
+	public List<Responsables> getResponsables(Long veterinariaId){
+		ResponseEntity<List<Responsables>> responsables = restTemplate.exchange("http://localhost:8002/Responsables/veterinaria/"+veterinariaId,
+				HttpMethod.GET,
+				null,
+				new ParameterizedTypeReference<List<Responsables>>() {});
+		return responsables.getBody();
+	}
+	
+	//****************************Feign MS-MASCOTAS ****************************************
+	
+	public Mascotas guardarMascota(Mascotas mascota) {
+		return mascotasFC.guardar(mascota);
+	}
+	
+	public Mascotas editarMascota(Mascotas mascota) {
+		return mascotasFC.editar(mascota);
+	}
+	
+	public Mascotas eliminarMascota(Long idMascota) {
+		return mascotasFC.eliminar(idMascota);
+	}
+	
+	public Mascotas bucarMascota(Long idMascota) {
+		return mascotasFC.buscar(idMascota);
+	}
+	
+	public List<Mascotas> obtenerMascotas(Long veterinariaId){
+		return mascotasFC.obtenerPorVeterinariaId(veterinariaId);
+	}
+	
+	//************************ restTemplate MASCOTAS ********************************************
+	
+	public Mascotas saveMascota(Mascotas mascota) {
+		ResponseEntity<Mascotas> newMascota = restTemplate.postForEntity("http://localhost:8003/mascotas/guardar", 
+											mascota, Mascotas.class);
+		return newMascota.getBody();
+	}
+	
+	public Mascotas editMascota(Mascotas mascota) {
+		ResponseEntity<Mascotas> editar = restTemplate.exchange("http://localhost:8003/mascotas/editar",
+				HttpMethod.PUT,
+				new HttpEntity<>(mascota),
+				Mascotas.class);
+		return editar.getBody();
+	}
+	
+	public Mascotas deleteMascota(Long idMascota) {
+		ResponseEntity<Mascotas> response = restTemplate.exchange("http://localhost:8003/mascotas/eliminar/{idMascota}",
+				HttpMethod.DELETE,
+				null,
+				Mascotas.class,
+				idMascota);
+		return response.getBody();
+	}
+	
+	public Mascotas findMascota(Long idMascota) {
+		return restTemplate.getForObject("http://localhost:8003/mascotas/buscar/{idMascota}", Mascotas.class, idMascota);
+	}
+	
+	public List<Mascotas> getMascotas(Long veterinariaId){
+		ResponseEntity<List<Mascotas>> list = restTemplate.exchange("http://localhost:8003/mascotas/veterinaria/"+veterinariaId,
+				HttpMethod.GET,
+				null,
+				new ParameterizedTypeReference<List<Mascotas>>() {});
+		return list.getBody();
+
+	}
+	
+	//****************************Feign MS-MASCOTAS ****************************************
+	public Clientes guardarCliente(Clientes cliente) {
+		return clientesFC.guardar(cliente);
+	}
+	
+	public Clientes editarClientes(Clientes cliente) {
+		return clientesFC.editar(cliente);
+	}
+	
+	public Clientes eliminarClientes(Long idCliente) {
+		return clientesFC.eliminar(idCliente);
+	}
+	
+	public Clientes buscarClientes(Long idCliente) {
+		return clientesFC.buscar(idCliente);
+	}
+	
+	public List<Clientes> obtenerListaPorVeterinaria(Long veterinariaId){
+		return clientesFC.obtenerPorVeterinariaId(veterinariaId);
+	}
+	
+	//************************ restTemplate MASCOTAS ********************************************
+	
+	public Clientes saveCliente(Clientes cliente) {
+		ResponseEntity<Clientes> client = restTemplate.postForEntity("http://localhost:8004/clientes/guardar", 
+				responsable, Responsables.class);
+		return nuevoResponsable.getBody();
+	}
+	
+	public Clientes editResponsables(Clientes cliente) {
+		ResponseEntity<Responsables> editar = restTemplate.exchange("http://localhost:8002/Responsables/editar", 
+				HttpMethod.PUT, 
+		        new HttpEntity<>(responsable), 
+		        Responsables.class
+		    );
+		return editar.getBody();
+	}
+	
+	public Responsables deleteResponsables(Long idResponsable) {
+		ResponseEntity<Responsables> response = restTemplate.exchange("http://localhost:8002/Responsables/eliminar/{idResponsable}",
+				HttpMethod.DELETE,
+				null,
+				Responsables.class, 
+				idResponsable);
+		return response.getBody();
+	}
+	
+	public Responsables findResponsables(Long idResponsable) {
+		return restTemplate.getForObject("http://localhost:8002/Responsables/eliminar/{idResponsable}",Responsables.class, idResponsable);
+	}
+	
+	public List<Responsables> getResponsables(Long veterinariaId){
+		ResponseEntity<List<Responsables>> responsables = restTemplate.exchange("http://localhost:8002/Responsables/veterinaria/"+veterinariaId,
+				HttpMethod.GET,
+				null,
+				new ParameterizedTypeReference<List<Responsables>>() {});
+		return responsables.getBody();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+package com.mx.Clientes.Service;
+
+public interface IClientesService {
+
+}

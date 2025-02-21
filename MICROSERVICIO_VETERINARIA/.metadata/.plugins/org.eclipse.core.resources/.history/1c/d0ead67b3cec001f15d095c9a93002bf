@@ -1,0 +1,8 @@
+package com.mx.Responsables.Service;
+
+import com.mx.Responsables.Entity.Responsables;
+
+public interface IResponsablesService {
+
+	public Responsables guardar(Responsables responsable);
+}

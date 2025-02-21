@@ -1,0 +1,54 @@
+package com.mx.Clientes.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+
+import com.mx.Clientes.Entity.Clientes;
+import com.mx.Clientes.Repository.IClientesDao;
+
+public class ClientesServiceImp implements IClientesService{
+	
+	@Autowired
+	private IClientesDao dao;
+
+	@Override
+	public Clientes guardarCliente(Clientes cliente) {
+		// TODO Auto-generated method stub
+		return dao.save(cliente);
+	}
+
+	@Override
+	public List<Clientes> listarClientes() {
+		// TODO Auto-generated method stub
+		return dao.findAll(Sort.by(Direction.ASC, "idCliente"));
+	}
+
+	@Override
+	public Clientes editarCliente(Clientes cliente) {
+		// TODO Auto-generated method stub
+		return dao.save(cliente);
+	}
+
+	@Override
+	public Clientes eliminarCliente(Long idCliente) {
+		// TODO Auto-generated method stub
+		Clientes aux = dao.findById(idCliente).orElse(null);
+		if(aux != null) {
+			dao.delete(aux);
+			return aux;
+		}
+		return null;
+	}
+
+	@Override
+	public Clientes buscarCliente(Long idCliente) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+}

@@ -1,0 +1,5 @@
+package com.mx.Veterinarias.Repository;
+
+public interface IVeterinariasDao {
+
+}
