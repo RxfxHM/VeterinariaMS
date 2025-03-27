@@ -1,5 +1,0 @@
-package com.mx.Mascotas.Repository;
-
-public interface IMascotasDao {
-
-}

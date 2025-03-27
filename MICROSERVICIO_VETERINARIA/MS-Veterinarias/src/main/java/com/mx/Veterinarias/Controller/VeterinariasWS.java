@@ -24,7 +24,6 @@ import com.mx.Veterinarias.Service.VeterinariasServiceImp;
 
 @RestController
 @RequestMapping("/veterinarias")
-@CrossOrigin
 public class VeterinariasWS {
 	
 	@Autowired
@@ -134,7 +133,7 @@ public class VeterinariasWS {
 		}
 	}
 	
-	@PostMapping("/Responsables/buscar/{idResponsable}")
+	@GetMapping("/Responsables/buscar/{idResponsable}")
 	public ResponseEntity<?> buscarResponsable(@PathVariable Long idResponsable){
 		Responsables buscar = service.findResponsables(idResponsable);
 		if(buscar == null) {
@@ -144,9 +143,9 @@ public class VeterinariasWS {
 		}
 	}
 	
-	@PostMapping("/Responsables/veterinaria/{veterinariaId}")
-	public ResponseEntity<?> obtenerResponsablesPorVeterinariaId(@PathVariable Long veterinariaId){
-		List<Responsables> responsables = service.getResponsables(veterinariaId);
+	@PostMapping("/detalle")
+	public ResponseEntity<?> obtenerResponsablesPorVeterinaria(@RequestBody Veterinarias veterinaria){
+		List<Responsables> responsables = service.getResponsables(veterinaria.getIdVeterinaria());
 		if(responsables.isEmpty()) {
 			return ResponseEntity.badRequest().build();
 		}else {
@@ -196,7 +195,7 @@ public class VeterinariasWS {
 		}
 	}
 	
-	@PostMapping("/mascotas/buscar/{idMascota}")
+	@GetMapping("/mascotas/buscar/{idMascota}")
 	public ResponseEntity<?> buscarMascota(@PathVariable Long idMascota){
 		Mascotas buscar = service.findMascota(idMascota);
 		if(buscar == null) {
@@ -258,7 +257,7 @@ public class VeterinariasWS {
 		}
 	}
 	
-	@PostMapping("/clientes/buscar/{idCliente}")
+	@GetMapping("/clientes/buscar/{idCliente}")
 	public ResponseEntity<?> buscarCliente(@PathVariable Long idCliente){
 		Clientes buscar = service.findclientes(idCliente);
 		if(buscar == null) {

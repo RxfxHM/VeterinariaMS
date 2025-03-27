@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mx.Clientes.Entity.Clientes;
+import com.mx.Clientes.Model.Mascotas;
 import com.mx.Clientes.Service.ClientesServiceImp;
 
 @RestController
 @RequestMapping("/clientes")
-@CrossOrigin
 public class ClientesWS {
 	
 	@Autowired
@@ -86,19 +86,17 @@ public class ClientesWS {
 			
 		}
 		
-		/*//Buscar por veterinaria
-		@PostMapping("veterinarias/{veterinariaId}")
-		public ResponseEntity<List<Clientes>> obtenerPorVeterinariaId(@PathVariable Long veterinariId){
-			return ResponseEntity.status(HttpStatus.OK).body(service.getByVeterinariaId(veterinariId));
+		///BUSCAR MASCOTAS POR CLIENTE
+		///
+		@PostMapping("/mascotas")
+		public ResponseEntity<List<Mascotas>> mascotasPorCliente(@RequestBody Clientes cliente){
+			List<Mascotas> list = service.getMascotas(cliente.getIdCliente());
+			if(list.isEmpty()) {
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+			}else {
+				return ResponseEntity.status(HttpStatus.OK).body(list);
+			}
 		}
-		*/
-		
-	
-		
-		
-		
-		
-		
 		
 
 }

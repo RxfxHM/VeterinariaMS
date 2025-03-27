@@ -3,12 +3,16 @@ package com.mx.Responsables.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import com.mx.Responsables.Entity.Responsables;
+import com.mx.Responsables.Model.Mascotas;
 import com.mx.Responsables.Repository.IResponsablesDao;
 
 
@@ -19,6 +23,8 @@ public class ResponsablesServiceImp implements IResponsablesService{
 	//Inyeccion de dependencias
 	@Autowired
 	private IResponsablesDao dao;
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	@Override
 	public Responsables guardarResponsable(Responsables responsable) {
@@ -60,6 +66,15 @@ public class ResponsablesServiceImp implements IResponsablesService{
 		return dao.findByVeterinariaId(veterinariaId);
 	}
 
+	//RESTTEMPLATE PARA SABER CUANTAS MASCOTAS TIENE DE RESPONSABLE
+	public List<Mascotas> getMascotas(Long responsableId){
+		ResponseEntity<List<Mascotas>> list = restTemplate.exchange("http://localhost:8003/mascotas/responsable/"+responsableId
+				,HttpMethod.GET,
+				null,
+				new ParameterizedTypeReference<List<Mascotas>>() {
+				});
+		return list.getBody();
+	}
 	
 
 }

@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mx.Responsables.Entity.Responsables;
+import com.mx.Responsables.Model.Mascotas;
+import com.mx.Responsables.Model.Veterinaria;
 import com.mx.Responsables.Service.ResponsablesServiceImp;
 
 @RestController
-@RequestMapping ("/Responsables")
-@CrossOrigin
+@RequestMapping ("/responsables")
 public class ResponsablesWS {
 
 	//Inyeccion de dependencias
@@ -91,9 +92,20 @@ public class ResponsablesWS {
 		
 	}
 	
-	//Buscar por veterinaria
-	@PostMapping("/veterinarias/{veterinariaId}")
+	//Buscar responsables por veterinaria
+	@GetMapping("/veterinaria/{veterinariaId}")
 	public ResponseEntity<List<Responsables>> obtenerPorVeterinariaId(@PathVariable Long veterinariaId){
 		return ResponseEntity.status(HttpStatus.OK).body(service.getByVeterinariaId(veterinariaId));
+	}
+	
+	//Buscar que mascotas tiene de responsable
+	@PostMapping("/mascotas")
+	public ResponseEntity<List<Mascotas>> obtenerMascotas(@RequestBody Responsables responsable){
+		List<Mascotas> mascotas = service.getMascotas(responsable.getIdResponsable());
+		if(mascotas.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}else {
+			return ResponseEntity.status(HttpStatus.OK).body(mascotas);
+		}
 	}
 }

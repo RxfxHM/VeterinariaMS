@@ -3,11 +3,16 @@ package com.mx.Clientes.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.mx.Clientes.Entity.Clientes;
+import com.mx.Clientes.Model.Mascotas;
 import com.mx.Clientes.Repository.IClientesDao;
 
 @Service
@@ -15,6 +20,9 @@ public class ClientesServiceImp implements IClientesService{
 	
 	@Autowired
 	private IClientesDao dao;
+	
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Override
 	public Clientes guardarCliente(Clientes cliente) {
@@ -51,10 +59,17 @@ public class ClientesServiceImp implements IClientesService{
 		return dao.findById(idCliente).orElse(null);
 	}
 	
-	/*public List<Clientes> getByVeterinariaId(Long veterinariaId){
-		return dao.findByVeterinariaId(veterinariaId);
-	}*/
-
+	////////////////////RESTTEMPLAT PARA CONSULTAR MASCOTAS POR CLIENTE
+	///
+	///
+	public List<Mascotas> getMascotas(Long clienteId){
+		ResponseEntity<List<Mascotas>> list = restTemplate.exchange("http://localhost:8003/mascotas/cliente/"+clienteId
+				, HttpMethod.GET,
+				null,
+				new ParameterizedTypeReference<List<Mascotas>>() {
+				});
+		return list.getBody();
+	}
 	
 
 }

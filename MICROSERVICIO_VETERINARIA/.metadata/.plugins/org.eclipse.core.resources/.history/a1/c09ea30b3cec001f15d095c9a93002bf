@@ -1,5 +1,0 @@
-package com.mx.Responsables.Service;
-
-public interface IResponsablesService {
-
-}

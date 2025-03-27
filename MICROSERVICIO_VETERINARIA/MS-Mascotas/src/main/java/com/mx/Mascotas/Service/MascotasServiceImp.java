@@ -6,9 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.mx.Mascotas.Entity.Mascotas;
+import com.mx.Mascotas.Models.Clientes;
+import com.mx.Mascotas.Models.Responsables;
+import com.mx.Mascotas.Models.Veterinaria;
 import com.mx.Mascotas.Repository.IMascotasDao;
+
 
 @Service
 public class MascotasServiceImp implements IMascotasService{
@@ -16,6 +21,9 @@ public class MascotasServiceImp implements IMascotasService{
 	//Inyeccion de dependencias
 	@Autowired
 	private IMascotasDao dao;
+	
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Override
 	public Mascotas guardarMascota(Mascotas mascota) {
@@ -52,8 +60,34 @@ public class MascotasServiceImp implements IMascotasService{
 		return dao.findById(idMascota).orElse(null);
 	}
 	
-	public List<Mascotas> getByVeterinariaId(Long veterinariaId){
-		return dao.findByVeterinariaId(veterinariaId);
+	public List<Mascotas> findbyResponsable(Long responsableId){
+		return dao.findByResponsableId(responsableId);
 	}
+	
+	public List<Mascotas> finbyCliente(Long clienteId){
+		return dao.findByClienteId(clienteId);
+	}
+	
+	/////////////////////////////////// RESTTEMPLATE PARA CONSULTAR AL RESPONSABLE
+	//
+	public Responsables findResponsables(Mascotas mascota) {
+		return restTemplate.getForObject("http://localhost:8002/responsables/buscar/" + mascota.getResponsableId(),Responsables.class, mascota.getResponsableId());
+	}
+	
+	/////////////////////////////////// RESTTEMPLATE PARA CONSULTAR AL CLIENTE
+	//
+	public Clientes findclientes(Mascotas mascota) {
+		return restTemplate.getForObject("http://localhost:8004/clientes/buscar/"
+				+ mascota.getClienteId(),Clientes.class, mascota.getClienteId());
+	}
+	
+	/////////////////////////////////// RESTTEMPLATE PARA CONSULTAR AL CLIENTE
+	//
+	public Veterinaria findVeterinaria(Mascotas mascota) {
+		return restTemplate.getForObject("http://localhost:8001/veterinarias/buscar/"
+				+ mascota.getVeterinariaId(),Veterinaria.class, mascota.getVeterinariaId());
+	}
+	
+	
 
 }

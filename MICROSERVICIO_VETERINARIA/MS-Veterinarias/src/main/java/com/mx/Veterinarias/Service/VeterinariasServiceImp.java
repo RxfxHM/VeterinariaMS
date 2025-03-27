@@ -13,8 +13,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.mx.Veterinarias.Entity.Veterinarias;
@@ -139,8 +137,8 @@ public class VeterinariasServiceImp implements IVeterinariasService{
 	}
 	
 	public List<Responsables> getResponsables(Long veterinariaId){
-		ResponseEntity<List<Responsables>> responsables = restTemplate.exchange("http://localhost:8002/Responsables/veterinarias/"+veterinariaId,
-				HttpMethod.POST,
+		ResponseEntity<List<Responsables>> responsables = restTemplate.exchange("http://localhost:8002/responsables/veterinaria/"+veterinariaId,
+				HttpMethod.GET,
 				null,
 				new ParameterizedTypeReference<List<Responsables>>() {});
 		return responsables.getBody();

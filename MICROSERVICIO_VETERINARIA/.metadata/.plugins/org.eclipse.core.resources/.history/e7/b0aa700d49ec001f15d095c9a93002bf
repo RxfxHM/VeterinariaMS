@@ -1,5 +1,0 @@
-package com.mx.Clientes.Repository;
-
-public interface IClientesDao {
-
-}

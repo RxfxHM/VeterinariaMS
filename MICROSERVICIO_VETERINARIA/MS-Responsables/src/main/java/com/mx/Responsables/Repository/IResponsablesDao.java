@@ -11,5 +11,5 @@ import com.mx.Responsables.Entity.Responsables;
 public interface IResponsablesDao extends JpaRepository<Responsables, Long>{
 	
 	public List<Responsables> findByVeterinariaId(Long veterinariaId);
-
+	
 }
