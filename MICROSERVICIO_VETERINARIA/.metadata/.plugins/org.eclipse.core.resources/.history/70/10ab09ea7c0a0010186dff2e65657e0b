@@ -1,0 +1,24 @@
+#Configuracion del servidor
+server.port=8004
+spring.application.name=MS-Clientes
+
+#Mostrar consultas SQL en la Consola
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format-sql=true
+
+#Configuracion del JDBC para H2Database
+spring.datasource.url=jdbc:h2:file:./data/bdvet
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+#Habilitar la consola H2
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+
+
+#Configuracion de Eureka Client para registro de Eureka Server
+eureka.instance.hostname=localhost
+eureka.client.service-url.defaultZone=http://localhost:8000/eureka
+
+

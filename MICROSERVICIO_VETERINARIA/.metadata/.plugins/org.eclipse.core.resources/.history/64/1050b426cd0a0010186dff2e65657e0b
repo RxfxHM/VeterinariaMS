@@ -1,0 +1,64 @@
+package com.mx.Responsables.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.stereotype.Service;
+
+import com.mx.Responsables.Entity.Responsables;
+import com.mx.Responsables.Repository.IResponsablesDao;
+
+
+@Service
+public class ResponsablesServiceImp implements IResponsablesService{
+
+	
+	//Inyeccion de dependencias
+	@Autowired
+	private IResponsablesDao dao;
+	
+	@Override
+	public Responsables guardarResponsable(Responsables responsable) {
+		// TODO Auto-generated method stub
+		return dao.save(responsable);
+	}
+
+	@Override
+	public List<Responsables> listarResponsables() {
+		// TODO Auto-generated method stub
+		return dao.findAll(Sort.by(Direction.ASC, "idResponsable"));
+	}
+
+	@Override
+	public Responsables editarResponsable(Responsables responsable) {
+		// TODO Auto-generated method stub
+		return dao.save(responsable);
+	}
+
+	@Override
+	public Responsables eliminarResponsables(Long idResponsable) {
+		// TODO Auto-generated method stub
+		Responsables aux = dao.findById(idResponsable).orElse(null);
+		if(aux != null) {
+			dao.delete(aux);
+			return aux;
+		}
+		return null;
+	}
+	
+	@Override
+	public Responsables buscarResponsable(Long idResponsable) {
+		// TODO Auto-generated method stub
+		return dao.findById(idResponsable).orElse(null);
+	}
+
+	//Personalizado
+	public List<Responsables> getByVeterinariaId(Long veterinariaId){
+		return dao.findByVeterinariaId(veterinariaId);
+	}
+
+	
+
+}

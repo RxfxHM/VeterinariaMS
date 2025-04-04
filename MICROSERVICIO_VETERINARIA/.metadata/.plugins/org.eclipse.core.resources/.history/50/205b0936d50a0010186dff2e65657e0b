@@ -1,0 +1,5 @@
+package com.mx.Clientes.Config;
+
+public class RestTemplateConfig {
+
+}

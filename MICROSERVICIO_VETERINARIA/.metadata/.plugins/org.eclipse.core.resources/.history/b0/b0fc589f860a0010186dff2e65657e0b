@@ -1,0 +1,5 @@
+package com.mx.Responsables.Config;
+
+public class RestTemplateConfig {
+
+}

@@ -21,8 +21,12 @@ import com.mx.Mascotas.Models.Responsables;
 import com.mx.Mascotas.Models.Veterinaria;
 import com.mx.Mascotas.Service.MascotasServiceImp;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/mascotas")
+@Tag(name = "Mascotas", description = "Gestion de Mascotas")
 public class MascotasWS {
 
 	// Inyeccion de dependencias
@@ -32,6 +36,8 @@ public class MascotasWS {
 	// guardar
 	// http://localhost:8003/mascotas/guardar
 	@PostMapping("/guardar")
+	@Operation(summary = "EndPoint para guardar un objeto Mascota",
+				description = "Recibe un objeto Mascota para guardar en la base de datos")
 	public ResponseEntity<?> guardar(@RequestBody Mascotas mascota) {
 		Mascotas aux = service.guardarMascota(mascota);
 		if (aux == null) {
@@ -44,6 +50,8 @@ public class MascotasWS {
 	// listar
 	// http://localhost:8003/mascotas/listar
 	@GetMapping("/listar")
+	@Operation(summary = "EndPoint para listar Mascotas",
+				description = "Recolecta todos los objetos Mascota y los muestra en una Lista")
 	private ResponseEntity<List<Mascotas>> listar() {
 		List<Mascotas> aux = service.listarMascotas();
 		if (aux == null) {
@@ -56,6 +64,8 @@ public class MascotasWS {
 	// editar
 	// http://localhost:8003/mascotas/editar
 	@PutMapping("/editar")
+	@Operation(summary = "EndPoint para editar un Objeto Mascota",
+				description = "Recibe un objeto Mascota y permite modificar sus valores en base de datos")
 	public ResponseEntity<?> editar(@RequestBody Mascotas mascota) {
 		Mascotas aux = service.editarMascota(mascota);
 		if (aux == null) {
@@ -68,6 +78,8 @@ public class MascotasWS {
 	// eliminar
 	// http://localhost:8003/mascotas/eliminar
 	@DeleteMapping("/eliminar/{idMascota}")
+	@Operation(summary = "EndPoint para eliminar Mascota",
+				description = "Recibe un ID de Mascota y eliminar los datos de la base de datos")
 	public ResponseEntity<?> eliminar(@PathVariable Long idMascota) {
 		Mascotas mascotaaux = service.eliminarMascota(idMascota);
 		if (mascotaaux == null) {
@@ -80,6 +92,8 @@ public class MascotasWS {
 	// buscar
 	// http://localhost:8002/mascotas/buscar
 	@GetMapping("/buscar/{idMascota}")
+	@Operation(summary = "EndPoint para buscar Mascota",
+				description = "Recibe un ID de mascota y permite obtener los datos de Mascota de la base de datos")
 	public ResponseEntity<?> buscar(@PathVariable Long idMascota) {
 		Mascotas aux = service.buscarMascota(idMascota);
 		if (aux == null) {
@@ -93,6 +107,9 @@ public class MascotasWS {
 	// Obtener detalle
 
 	@PostMapping("/detalle")
+	@Operation(summary = "EndPoint RestTemplate para mostrar todos los detalles de Mascota",
+				description = "Recibe un objeto Mascota y consulta mediante el ID asociado "
+						+ "la informacion de Responsable, Cliente y Veterinaria")
 	public ResponseEntity<?> detalleMascota(@RequestBody Mascotas mascota) {
 		Responsables responsable = service.findResponsables(mascota);
 		Clientes cliente = service.findclientes(mascota);
@@ -106,6 +123,8 @@ public class MascotasWS {
 	}
 
 	@GetMapping("/responsable/{responsableId}")
+	@Operation(summary = "EndPoint RestTemplate para obtener las Mascotas por Responsable",
+				description = "Recopila los objetos mascotas que coincidan con el ID de Responsable y devuelve una lista")
 	public ResponseEntity<List<Mascotas>> obtenerMascotas(@PathVariable Long responsableId) {
 		List<Mascotas> list = service.findbyResponsable(responsableId);
 		if (list.isEmpty()) {
@@ -116,6 +135,8 @@ public class MascotasWS {
 	}
 
 	@GetMapping("/cliente/{clienteId}")
+	@Operation(summary = "EndPoint RestTemplate para obtener las Mascotas por Cliente",
+				description = "Recibe un ID cliente y obtiene todas las mascotas de ese Cliente mediante una lista")
 	public ResponseEntity<List<Mascotas>> obtenerMascotasPorCliente(@PathVariable Long clienteId) {
 		List<Mascotas> list = service.finbyCliente(clienteId);
 		if (list.isEmpty()) {

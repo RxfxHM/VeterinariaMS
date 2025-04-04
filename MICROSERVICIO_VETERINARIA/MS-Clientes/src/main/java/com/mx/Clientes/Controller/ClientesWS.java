@@ -18,8 +18,12 @@ import com.mx.Clientes.Entity.Clientes;
 import com.mx.Clientes.Model.Mascotas;
 import com.mx.Clientes.Service.ClientesServiceImp;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/clientes")
+@Tag(name = "Clientes", description = "Gestion de Clientes")
 public class ClientesWS {
 	
 	@Autowired
@@ -28,6 +32,8 @@ public class ClientesWS {
 		//guardar
 		//http://localhost:8004/clientes/guardar
 		@PostMapping("/guardar")
+		@Operation(summary = "EndPoint para guardar un Objeto Cliente",
+					description = "Recibe un Objeto cliente que guardar en la base datos")
 		public ResponseEntity<?> guardar(@RequestBody Clientes cliente){
 			Clientes aux = service.guardarCliente(cliente);
 			if(aux == null) {
@@ -40,6 +46,8 @@ public class ClientesWS {
 		//listar
 		//http://localhost:8004/clientes/listar
 		@GetMapping("/listar")
+		@Operation(summary = "EndPoint para listar Clientes",
+					description = "Obtiene toda la informacion de los Clientes y los devuelve en una lista")
 		private ResponseEntity<List<Clientes>> listar(){
 			List<Clientes> aux = service.listarClientes();
 			if(aux == null) {
@@ -52,6 +60,8 @@ public class ClientesWS {
 		//editar
 		//http://localhost:8004/clientes/editar
 		@PostMapping("/editar")
+		@Operation(summary = "EndPoint para editar un Objeto Cliente",
+					description = "Recibe un objeto Cliente y modifica sus valores en base de datos")
 		public ResponseEntity<?> editar(@RequestBody Clientes cliente){
 			Clientes aux = service.editarCliente(cliente);
 			if(aux == null) {
@@ -64,6 +74,8 @@ public class ClientesWS {
 		//eliminar
 		//http://localhost:8004/clientes/eliminar
 		@DeleteMapping("/eliminar/{idCliente}")
+		@Operation(summary = "EndPoint para eliminar un Objeto Cliente",
+					description = "Recibe un ID cliente y lo elimina de la base de datos")
 		public ResponseEntity<?> eliminar(@PathVariable Long idCliente){
 			Clientes clienteaux = service.eliminarCliente(idCliente);
 			if(clienteaux == null) {
@@ -76,6 +88,8 @@ public class ClientesWS {
 		//buscar
 		//http://localhost:8004/clientes/buscar
 		@GetMapping("/buscar/{idCliente}")
+		@Operation(summary = "EndPoint para buscar un Objeto Cliente",
+					description = "Recibe un ID de Cliente y obtiene todos los valores de ese cliente de la base de datos")
 		public ResponseEntity<?> buscar(@PathVariable Long idCliente){
 			Clientes aux = service.buscarCliente(idCliente);
 			if(aux == null) {
@@ -89,6 +103,8 @@ public class ClientesWS {
 		///BUSCAR MASCOTAS POR CLIENTE
 		///
 		@PostMapping("/mascotas")
+		@Operation(summary = "EndPoint RestTemplate para buscar todas las Mascotas por Cliente",
+					description = "Recibe un Objeto Cliente y devuelve todas las Mascotas del Cliente en forma de Lista")
 		public ResponseEntity<List<Mascotas>> mascotasPorCliente(@RequestBody Clientes cliente){
 			List<Mascotas> list = service.getMascotas(cliente.getIdCliente());
 			if(list.isEmpty()) {

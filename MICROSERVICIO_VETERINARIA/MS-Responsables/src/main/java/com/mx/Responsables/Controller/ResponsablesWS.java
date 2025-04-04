@@ -20,8 +20,12 @@ import com.mx.Responsables.Model.Mascotas;
 import com.mx.Responsables.Model.Veterinaria;
 import com.mx.Responsables.Service.ResponsablesServiceImp;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping ("/responsables")
+@Tag(name = "Responsables", description = "Gestion de Responsables")
 public class ResponsablesWS {
 
 	//Inyeccion de dependencias
@@ -33,6 +37,9 @@ public class ResponsablesWS {
 	//Guardar
 	//http://localhost:8002/Responsables/listar
 	@GetMapping("/listar")
+	@Operation(summary = "EndPoint para listar todos los responsables",
+				description = "Recupera toda la informacion de la base de datos de los"
+						+ " responsables y los lista")
 	public ResponseEntity<List<Responsables>> listar(){
 		List<Responsables> list = service.listarResponsables();
 		if(list.isEmpty()) {
@@ -46,6 +53,8 @@ public class ResponsablesWS {
 	//guardar
 	//http://localhost:8002/Responsables/guardar
 	@PostMapping("/guardar")
+	@Operation(summary = "EndPoint para guardar un objeto Responsable",
+				description = "Permite guardar todos los datos de un objeto Responsable a la base de datos")
 	public ResponseEntity<?> guardar(@RequestBody Responsables responsable){
 		Responsables responsableaux = service.guardarResponsable(responsable);
 		if(responsableaux == null) {
@@ -58,6 +67,8 @@ public class ResponsablesWS {
 	//editar
 	//http://localhost:8002/Responsables/editar
 	@PutMapping("/editar")
+	@Operation(summary = "EndPoint para editar un objeto Responsable",
+				description = "Recupera los datos de un Responsable con su ID y permite modificarlo")
 	public ResponseEntity<?> editar(@RequestBody Responsables responsable){
 		Responsables respon = service.editarResponsable(responsable);
 		if(respon == null) {
@@ -70,6 +81,8 @@ public class ResponsablesWS {
 	//eliminar
 	//http://localhost:8002/Responsables/eliminar/{}
 	@DeleteMapping("/eliminar/{idResponsable}")
+	@Operation(summary = "EndPoint para eliminar un objeto Responsable",
+				description = "Recibe un ID de Responbable y elimina los datos de la base de datos")
 	public ResponseEntity<?> eliminar(@PathVariable Long idResponsable){
 		Responsables respon = service.eliminarResponsables(idResponsable);
 		if(respon == null) {
@@ -82,6 +95,8 @@ public class ResponsablesWS {
 	//buscar
 	//http://localhost:8002/Responsables/buscar
 	@GetMapping("/buscar/{idResponsable}")
+	@Operation(summary = "EndPoint para buscar un Responsable",
+				description = "Recibe un ID de Responsable y recupera la informacion de la base de datos")
 	public ResponseEntity<?> buscar(@PathVariable Long idResponsable){
 		Responsables respo = service.buscarResponsable(idResponsable);
 		if(respo == null) {
@@ -94,12 +109,16 @@ public class ResponsablesWS {
 	
 	//Buscar responsables por veterinaria
 	@GetMapping("/veterinaria/{veterinariaId}")
+	@Operation(summary = "EndPoint de Responsables por Veterinaria",
+				description = "Recibe un ID de veterinaria y recupera la informacion de los responsables que hayan sido registrados con esa ID de veterinaria")
 	public ResponseEntity<List<Responsables>> obtenerPorVeterinariaId(@PathVariable Long veterinariaId){
 		return ResponseEntity.status(HttpStatus.OK).body(service.getByVeterinariaId(veterinariaId));
 	}
 	
 	//Buscar que mascotas tiene de responsable
 	@PostMapping("/mascotas")
+	@Operation(summary = "EndPoint de Mascotas por Responsable",
+				description = "Recibe un objeto Responsable y recupera toda las mascotas que tiene relacionado el ID Responsable")
 	public ResponseEntity<List<Mascotas>> obtenerMascotas(@RequestBody Responsables responsable){
 		List<Mascotas> mascotas = service.getMascotas(responsable.getIdResponsable());
 		if(mascotas.isEmpty()) {

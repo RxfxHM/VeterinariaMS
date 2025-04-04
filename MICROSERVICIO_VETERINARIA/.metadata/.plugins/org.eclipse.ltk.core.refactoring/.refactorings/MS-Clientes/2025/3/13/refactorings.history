@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.mx.Clientes.Model.Clientes&apos; to &apos;Mascotas&apos;&#x0D;&#x0A;- Original project: &apos;MS-Clientes&apos;&#x0D;&#x0A;- Original element: &apos;com.mx.Clientes.Model.Clientes&apos;&#x0D;&#x0A;- Renamed element: &apos;com.mx.Clientes.Model.Mascotas&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Clientes&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.mx.Clientes.Model{Clientes.java[Clientes" matchStrategy="1" name="Mascotas" qualified="false" references="true" similarDeclarations="false" stamp="1743056305417" textual="false" version="1.0"/>
+</session>
