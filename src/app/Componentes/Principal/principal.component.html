@@ -1,0 +1,48 @@
+<main class="main">
+    <div class="content">
+      <div class="left-side">
+        <div>
+          <h1>Veterinarias</h1><br><br>
+  
+  
+          <div class = "btn-group" role="group" aria-label="Button group with nested dropdown">
+            <li class="nav-item">
+            <button class="btn btn-outline-primary" (click)= "listarVeterinarias()" > Listar Veterinarias</button>
+            <button class="btn btn-outline-primary"  (click) = "nuevaVeterinaria()">Agregar Veterinaria</button> 
+            </li><br>
+            <li class="nav-item">
+            <button class="btn btn-outline-primary" (click)= "listarResponsables()"> Listar Responsables</button>
+            <button class="btn btn-outline-primary" (click) = "nuevoResponsable()">Agregar Responsable</button>
+            </li><br>
+            <li class="nav-item">
+            <button class="btn btn-outline-primary" (click)= "listarMascotas()"> Listar Mascotas</button>
+            <button class="btn btn-outline-primary"  (click) = "nuevaMascota()">Agregar Mascota</button><br>
+            </li><br>
+           <li class="nav-item">
+            <button class="btn btn-outline-primary" (click)= "listarClientes()">Listar Clientes</button>
+            <button class="btn btn-outline-primary" (click) = "nuevoCliente()">Agrega Cliente</button>
+          </li>
+  
+          </div><br><br>
+         
+  
+        </div>
+      </div>
+      <div class="divider" role="separator" aria-label="Divider"></div>
+      <div class="right-side" text-start>
+        
+        
+        </div>
+      </div>
+  </main>
+  
+  <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+  <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
+  <!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
+  <!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
+  <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+  <!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
+  <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+  
+  
+  <router-outlet />

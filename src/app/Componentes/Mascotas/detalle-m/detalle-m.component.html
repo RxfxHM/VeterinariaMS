@@ -1,0 +1,45 @@
+<div class="container mt-4">
+    <h2>Detalle de la Mascota</h2>
+
+    <!-- Estado de carga -->
+    <div *ngIf="!mascotaDetalle" class="text-center my-4">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p>Cargando detalles...</p>
+    </div>
+
+    <!-- Tarjeta con toda la información -->
+    <div *ngIf="mascotaDetalle" class="card">
+        <div class="card-body">
+            <div class="row">
+                <!-- Sección Cliente -->
+                <div class="col-md-4 border-end">
+                    <h4 class="card-title text-primary">Información del Cliente</h4>
+                    <p><strong>ID:</strong> {{mascotaDetalle.cliente?.idCliente}}</p>
+                    <p><strong>Nombre:</strong> {{mascotaDetalle.cliente?.nombre}}</p>
+                    <p><strong>Dirección:</strong> {{mascotaDetalle.cliente?.direccion}}</p>
+                    <p><strong>Contacto:</strong> {{mascotaDetalle.cliente?.contacto}}</p>
+                </div>
+
+                <!-- Sección Responsable -->
+                <div class="col-md-4 border-end">
+                    <h4 class="card-title text-primary">Información del Responsable</h4>
+                    <p><strong>ID:</strong> {{mascotaDetalle.responsable?.idResponsable}}</p>
+                    <p><strong>Nombre:</strong> {{mascotaDetalle.responsable?.nombre}}</p>
+                    <p><strong>Contacto:</strong> {{mascotaDetalle.responsable?.contacto}}</p>
+                    <p><strong>Veterinaria ID:</strong> {{mascotaDetalle.responsable?.veterinariaId}}</p>
+                </div>
+
+                <!-- Sección Veterinaria -->
+                <div class="col-md-4">
+                    <h4 class="card-title text-primary">Información de la Veterinaria</h4>
+                    <p><strong>ID:</strong> {{mascotaDetalle.veterinaria?.idVeterinaria}}</p>
+                    <p><strong>Nombre:</strong> {{mascotaDetalle.veterinaria?.nombre}}</p>
+                    <p><strong>Dirección:</strong> {{mascotaDetalle.veterinaria?.direccion}}</p>
+                    <p><strong>Teléfono:</strong> {{mascotaDetalle.veterinaria?.telefono}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="content">
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h4>Agregar Mascota</h4>
+          </div>
+        </div>
+        <div class="card-body">
+          <form>
+  
+            <!-- <div class="form-group">
+              <label for="idMascota">ID</label>
+              <input type="number" class="form-control" name="idMascota" [(ngModel)]="mascota.idMascota" min="1">
+            </div>-->
+  
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" class="form-control" name="nombre" [(ngModel)]="mascota.nombre">
+            </div>
+  
+            <div class="form-group">
+              <label for="Raza">Raza</label>
+              <input type="text" class="form-control" name="raza" [(ngModel)]="mascota.raza">
+            </div>
+  
+            <div class="form-group">
+              <label for="edad">Edad</label>
+              <input type="number" class="form-control" name="edad" [(ngModel)]="mascota.edad">
+            </div>
+
+            <div class="form-group">
+                <label for="razonCita">Razon Cita</label>
+                <input type="text" class="form-control" name="razonCita" [(ngModel)]="mascota.razonCita">
+              </div>
+
+              <div class="form-group">
+                <label for="clienteId">Clientes</label>
+                <select name="clienteId" class="form-control" [(ngModel)]="mascota.clienteId">
+                  <option [ngValue]="undefined">Selecciona el cliente</option>
+                  @for (cliente of clientes; track cliente.idCliente) {
+                    <option [ngValue]="cliente.idCliente">{{cliente.nombre}}</option>
+                  }@empty {
+                    <option [ngValue]="undefined">No existen datos para mostrar</option>
+                  }
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="responsableId">Responsable</label>
+                <select name="responsableId" class="form-control" [(ngModel)]="mascota.responsableId">
+                  <option [ngValue]="undefined">Selecciona un responsable</option>
+                  @for (responsable of responsables; track responsable.idResponsable) {
+                    <option [ngValue]="responsable.idResponsable">{{responsable.nombre}}</option>
+                  }@empty {
+                    <option [ngValue]="undefined">No existen datos para mostrar</option>
+                  }
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="veterinariaId">Veterinaria</label>
+                <select name="veterinariaId" class="form-control" [(ngModel)]="mascota.veterinariaId">
+                  <option [ngValue]="undefined">Seleccione una veterinaria</option>
+                  @for (veterinaria of veterinarias; track veterinaria.idVeterinaria) {
+                    <option [ngValue]="veterinaria.idVeterinaria">{{veterinaria.nombre}} - {{veterinaria.direccion}}</option>
+                  }@empty {
+                    <option [ngValue]="undefined">No existen datos para mostrar</option>
+                  }
+                </select>
+              </div>
+
+  
+            <br><button class="btn btn-warning" (click) = "guardarMascota()">Guardar</button>
+  
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

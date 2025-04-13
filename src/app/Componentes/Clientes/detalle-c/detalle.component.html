@@ -1,0 +1,30 @@
+<div class="container mt-4">
+    <h2>Lista de Mascotas</h2>
+  
+    <!-- Estado de carga -->
+    <div *ngIf="mascotas === undefined" class="text-center my-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p>Cargando mascotas...</p>
+    </div>
+  
+    <!-- Lista cuando hay datos -->
+    <div *ngIf="mascotas && mascotas.length > 0">
+      <ul class="list-group">
+        <li *ngFor="let item of mascotas" class="list-group-item">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="mb-1">Nombre: {{item.nombre}}</h5>
+              <h5 class="mb-1">Raza: {{item.raza}}</h5>
+              <h5 class="mb-1">Edad: {{item.edad}}</h5>
+              <h5 class="mb-1">Razon de la Cita: {{item.razonCita}}</h5>
+              <h5 class="mb-1">Cliente ID: {{item.clienteId}}</h5>
+              <h5 class="mb-1">Responsable ID: {{item.responsableId}}</h5>
+              <h5 class="mb-1">Veterinaria ID: {{item.veterinariaId}}</h5>
+              <span class="mb-1">ID: {{item.idMascota}}</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>

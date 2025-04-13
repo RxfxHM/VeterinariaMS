@@ -1,0 +1,55 @@
+<div class="content">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3>Listado de Veterinarias</h3>
+                </div>
+                <div id="buscar" class="input-group">
+                    <input 
+                        type="text"
+                        class="form-control"
+                        placeholder="Escribe el ID de la veterinaria a buscar..."
+                        aria-label="Buscar"
+                        aria-describedby="Buscar"
+                        [(ngModel)]="veterinaria.idVeterinaria"
+                        (ngModelChange)="buscarPorId()"
+                        
+                    >
+                </div>
+            </div>
+            <div class="card-body"></div>
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID VETERINARIA</th>
+                        <th>NOMBRE</th>
+                        <th>DIRECCION</th>
+                        <th>TELEFONO</th>
+                        <th>EDITAR</th>
+                        <th>ELIMINAR</th>
+                        <th>RESPONSABLES</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (veterinaria of veterinarias; track veterinaria.idVeterinaria){
+                        <tr>
+                            <td>{{veterinaria.idVeterinaria}}</td>
+                            <td>{{veterinaria.nombre}}</td>
+                            <td>{{veterinaria.direccion}}</td>
+                            <td>{{veterinaria.telefono}}</td>
+                            <td><button class="btn btn-warning" (click) = "editar(veterinaria)"> Editar</button></td>
+                            <td><button class="btn btn-danger" (click) = "eliminar(veterinaria.idVeterinaria)">Eliminar</button></td>
+                            <td><button class="btn btn-azul" (click) = "detalle(veterinaria)"> Ver Detalle</button></td>
+                        </tr>
+                    } @empty{
+                        <tr>
+                            <td colspan="4" style="text-align: center;"> NO EXISTEN REGISTROS PARA MOSTRAR</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

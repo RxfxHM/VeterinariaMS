@@ -1,0 +1,45 @@
+<div class="content">
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h4>Eliminar Responsable</h4>
+          </div>
+        </div>
+        <div class="card-body">
+          <form>
+  
+            <div class="form-group">
+              <label for="idResponsable">ID</label>
+              <input type="number" class="form-control" name="idResponsable" [(ngModel)]="responsable.idResponsable" readonly>
+            </div>
+  
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" class="form-control" name="nombre" [(ngModel)]="responsable.nombre" readonly>
+            </div>
+  
+            <div class="form-group">
+              <label for="contacto">Contacto</label>
+              <input type="number" class="form-control" name="contacto" [(ngModel)]="responsable.contacto" readonly>
+            </div>
+  
+            <div class="form-group">
+              <label for="veterinariaId">Veterinaria</label>
+              <select name="veterinariaId" class="form-control" [(ngModel)]="responsable.veterinariaId">
+                  @for (veterinaria of veterinaria; track veterinaria.idVeterinaria) {
+                    @if (veterinaria.idVeterinaria === responsable.veterinariaId) {
+                      <option [ngValue]="veterinaria.idVeterinaria">{{veterinaria.nombre}} - {{veterinaria.direccion}}</option>
+                    }
+                  }
+              </select>
+            </div>
+
+  
+            <br><button class="btn btn-warning" (click) = "eliminar()">Eliminar</button>
+  
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,46 @@
+<div class="content">
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h4>Agregar Responsable</h4>
+          </div>
+        </div>
+        <div class="card-body">
+          <form>
+  
+            <!--<div class="form-group">
+              <label for="idResponsables">ID</label>
+              <input type="number" class="form-control" name="idResponsables" [(ngModel)]="responsable.idResponsables"  min="1">
+            </div>-->
+  
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" class="form-control" name="nombre" [(ngModel)]="responsable.nombre" >
+            </div>
+  
+            <div class="form-group">
+              <label for="contacto">Contacto</label>
+              <input type="number" class="form-control" name="contacto" [(ngModel)]="responsable.contacto" >
+            </div>
+  
+            <div class="form-group">
+              <label for="veterinariaId">Veterinaria</label>
+              <select name="veterinariaId" class="form-control" [(ngModel)]="responsable.veterinariaId">
+                <option [ngValue]="undefined">Selecciona un veterinaria</option>
+                @for (veterinaria of veterinaria; track veterinaria.idVeterinaria) {
+                  <option [ngValue]="veterinaria.idVeterinaria">{{veterinaria.nombre}} - {{veterinaria.direccion}}</option>
+                }@empty {
+                  <option [ngValue]="undefined">No existen datos para mostrar</option>
+                }
+              </select>
+            </div>
+
+  
+            <br><button class="btn btn-warning" (click) = "guardarResponsable()">Guardar</button>
+  
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

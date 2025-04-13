@@ -1,0 +1,10 @@
+.btn-azul {
+    background-color: #0d6efd;  /* Azul estándar */
+    color: #fff;                /* Texto blanco para mejor contraste */
+    border-color: #0d6efd;
+  }
+  
+  .btn-azul:hover {
+    background-color: #0b5ed7;  /* Un tono más oscuro al pasar el mouse */
+    border-color: #0a58ca;
+  }

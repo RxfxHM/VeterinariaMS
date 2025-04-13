@@ -1,0 +1,39 @@
+<div class="content">
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h4>Agregar Veterinaria</h4>
+          </div>
+        </div>
+        <div class="card-body">
+          <form>
+  
+           <!-- <div class="form-group">
+              <label for="idVeterinaria">ID</label>
+              <input type="number" class="form-control" name="idVeterinaria" [(ngModel)]="veterinaria.idVeterinaria" min="1">
+            </div>-->
+  
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" class="form-control" name="nombre" [(ngModel)]="veterinaria.nombre">
+            </div>
+  
+            <div class="form-group">
+              <label for="direccion">Direccion</label>
+              <input type="text" class="form-control" name="direccion" [(ngModel)]="veterinaria.direccion">
+            </div>
+  
+            <div class="form-group">
+              <label for="telefono">Telefono</label>
+              <input type="number" class="form-control" name="telefono" [(ngModel)]="veterinaria.telefono">
+            </div>
+
+  
+            <br><button class="btn btn-warning" (click) = "guardarVeterinaria()">Guardar</button>
+  
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
