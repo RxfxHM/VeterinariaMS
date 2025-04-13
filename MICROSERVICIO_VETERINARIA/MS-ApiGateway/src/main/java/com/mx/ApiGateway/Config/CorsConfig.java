@@ -2,7 +2,6 @@ package com.mx.ApiGateway.Config;
 
 import java.util.Arrays;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -19,6 +18,9 @@ public class CorsConfig {
 		config.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
 		config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
 		config.setAllowedMethods(Arrays.asList("GET","POST","PUT", "DELETE","OPTIONS"));
+		config.addExposedHeader("Authorization");
+        config.addExposedHeader("Content-Disposition");
+        config.setMaxAge(3600L);
 		
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);

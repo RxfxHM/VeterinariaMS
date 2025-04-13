@@ -76,5 +76,11 @@ public class ResponsablesServiceImp implements IResponsablesService{
 		return list.getBody();
 	}
 	
+	//Validaciones
+	public boolean validacion(String nombre, Long veterinariaId) {
+		return dao.existsByNombreIgnoreCaseAndVeterinariaId(nombre, veterinariaId);
+	}
+
+	
 
 }

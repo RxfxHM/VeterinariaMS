@@ -12,4 +12,7 @@ public interface IResponsablesDao extends JpaRepository<Responsables, Long>{
 	
 	public List<Responsables> findByVeterinariaId(Long veterinariaId);
 	
+	public boolean existsByNombreIgnoreCaseAndVeterinariaId(String nombre, Long VeterinariaId);
+
+	
 }

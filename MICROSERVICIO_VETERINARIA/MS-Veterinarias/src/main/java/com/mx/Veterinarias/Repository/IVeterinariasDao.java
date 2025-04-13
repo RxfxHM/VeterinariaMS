@@ -6,5 +6,5 @@ import com.mx.Veterinarias.Entity.Veterinarias;
 
 public interface IVeterinariasDao extends JpaRepository<Veterinarias, Long>{
 
-	
+	public boolean existsByNombreIgnoreCaseAndDireccion(String nombre, String direccion); 
 }

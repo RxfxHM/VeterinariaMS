@@ -56,6 +56,9 @@ public class ResponsablesWS {
 	@Operation(summary = "EndPoint para guardar un objeto Responsable",
 				description = "Permite guardar todos los datos de un objeto Responsable a la base de datos")
 	public ResponseEntity<?> guardar(@RequestBody Responsables responsable){
+		if(service.validacion(responsable.getNombre(), responsable.getVeterinariaId())) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
 		Responsables responsableaux = service.guardarResponsable(responsable);
 		if(responsableaux == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

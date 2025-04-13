@@ -1,0 +1,119 @@
+package com.mx.Veterinarias.Controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mx.Veterinarias.Entity.Veterinarias;
+import com.mx.Veterinarias.Models.Responsables;
+import com.mx.Veterinarias.Service.VeterinariasServiceImp;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@RestController
+@RequestMapping("/veterinarias")
+@Tag(name = "Veterinarias", description = "Gestion de Veterinarias")
+public class VeterinariasWS {
+
+	@Autowired
+	private VeterinariasServiceImp service;
+
+	/// guardar
+	// http://localhost:8001/veterinarias/guardar
+	@PostMapping("/guardar")
+	@Operation(summary = "EndPoint Guardar Veterinaria", description = "Recibe un objeto de tipo Veterinaria y agrega"
+			+ " informacion a la base de datos, correspondiente a cada campo")
+	public ResponseEntity<?> guardar(@RequestBody Veterinarias veterinaria) {
+		Veterinarias aux = service.validarNombre(veterinaria.getNombre());
+		if(aux == true) {
+			throw new IllegalStateException("Nombre ya registrado");
+		}
+		 aux = service.guardarVeterinaria(veterinaria);
+		if (aux == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(aux);
+		}
+	}
+
+	// listar
+	// http://localhost:8001/veterinarias/listar
+	@GetMapping("/listar")
+	@Operation(summary = "EndPoint para listar las Veterinarias Registradas", description = "Obtiene toda la informacion de las veterinarias registradas en la base de datos")
+	public ResponseEntity<?> listar() {
+		List<Veterinarias> list = service.listarVeterinarias();
+		if (list.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(list);
+		}
+	}
+
+	// editar
+	// http://localhost:8001/veterinarias/editar
+	@PutMapping("/editar")
+	@Operation(summary = "EndPoint para editar un objeto Veterinaria", description = "Recupera un objeto Veterinaria en la base de datos, para poder editarlo de acuerdo al campo requerido")
+	public ResponseEntity<?> editar(@RequestBody Veterinarias veterinaria) {
+		Veterinarias aux = service.editarVterinarias(veterinaria);
+		if (aux == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(aux);
+		}
+	}
+
+	// eliminar
+	// http://localhost:8001/veterinarias/eliminar
+	@DeleteMapping("/eliminar/{idVeterinaria}")
+	@Operation(summary = "EndPoint para eliminar un objeto Veterinaria", description = "Recupera un objetivo tipo Veterinaria de la base de datos y elimina el dato")
+	public ResponseEntity<?> eliminar(@PathVariable Long idVeterinaria) {
+		Veterinarias aux = service.eliminarVeterinaria(idVeterinaria);
+		if (aux == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(aux);
+		}
+	}
+
+	// buscar
+	// http://localhost:8001/veterinarias/buscar
+	@GetMapping("/buscar/{idVeterinaria}")
+	@Operation(summary = "Endpoint para buscar un objeto Veterinaria",
+				description = "Busca en la base un objeto Veterinaria de acuerdo a su ID")
+	public ResponseEntity<?> buscar(@PathVariable Long idVeterinaria) {
+		Veterinarias aux = service.buscarVeterinaria(idVeterinaria);
+		if (aux == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(aux);
+
+		}
+	}
+
+	// -------------------------- Responsables
+	@PostMapping("/detalle")
+	@Operation(summary = "EndPoint para obtener responsables por Veterinaria",
+				description = "Recibe un objeto Veterinaria, y toma su ID para compararlo con el ID registrado de Veterinaria de cada Responsables y trae una lista")
+	public ResponseEntity<?> obtenerResponsablesPorVeterinaria(@RequestBody Veterinarias veterinaria) {
+		List<Responsables> responsables = service.getResponsables(veterinaria.getIdVeterinaria());
+		if (responsables.isEmpty()) {
+			return ResponseEntity.badRequest().build();
+		} else {
+			return ResponseEntity.ok(responsables);
+		}
+	}
+
+	
+
+}

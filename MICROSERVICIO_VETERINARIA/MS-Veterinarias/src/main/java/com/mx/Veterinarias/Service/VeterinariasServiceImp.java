@@ -78,6 +78,10 @@ public class VeterinariasServiceImp implements IVeterinariasService{
 		return dao.findById(idVeterinaria).orElse(null);
 	}
 	
+	public boolean validacion(String nombre, String direccion) {
+		return dao.existsByNombreIgnoreCaseAndDireccion(nombre, direccion);
+	}
+	
 	//****************************Feign MS-RESPONSABLES ****************************************
 	public Responsables guardarResponsable(Responsables responsable) {
 		return responsablesFC.guardar(responsable);

@@ -71,5 +71,10 @@ public class ClientesServiceImp implements IClientesService{
 		return list.getBody();
 	}
 	
+	//VALIDACIONES
+	public boolean validacion(String nombre, String direccion) {
+		return dao.existsByNombreIgnoreCaseAndDireccion(nombre, direccion);
+	}
+	
 
 }

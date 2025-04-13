@@ -1,0 +1,43 @@
+package com.mx.ApiGateway.Controller;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mx.ApiGateway.Entity.Usuarios;
+import com.mx.ApiGateway.Repository.IUsuariosRepository;
+
+@RestController
+@RequestMapping("/auth")
+public class UsuariosController {
+
+	@Autowired
+	private AuthenticationManager authmanager;
+	@Autowired
+	private IUsuariosRepository dao;
+	@Autowired
+	private PasswordEncoder encoder;
+	
+	@PostMapping("login")
+	public ResponseEntity<?> login (@RequestBody Usuarios usuario){
+		try {
+			Authentication auth= authmanager.authenticate(
+					new UsernamePasswordAuthenticationToken(usuario.getUsuario(), usuario.getPassword()));
+			
+			SecurityContextHolder.getContext().setAuthentication(auth);
+			return ResponseEntity.status(HttpStatus.OK).body("Autenticacion Exitosa");
+					
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+}

@@ -1,0 +1,5 @@
+package com.mx.ApiGateway.Controller;
+
+public class UsuariosController {
+
+}

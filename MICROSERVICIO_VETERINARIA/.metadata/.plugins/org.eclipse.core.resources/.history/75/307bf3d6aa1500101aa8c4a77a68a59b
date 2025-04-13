@@ -1,0 +1,16 @@
+package com.mx.ApiGateway.Entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Data;
+
+@Entity
+@Data
+@Table(name = "USUARIOS_SECURITY")
+public class Usuarios {
+	
+	private String usuario;
+	private String password;
+	private String rol;
+
+}

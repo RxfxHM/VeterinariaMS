@@ -35,6 +35,9 @@ public class VeterinariasWS {
 	@Operation(summary = "EndPoint Guardar Veterinaria", description = "Recibe un objeto de tipo Veterinaria y agrega"
 			+ " informacion a la base de datos, correspondiente a cada campo")
 	public ResponseEntity<?> guardar(@RequestBody Veterinarias veterinaria) {
+		if(service.validacion(veterinaria.getNombre(), veterinaria.getDireccion())) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
 		Veterinarias aux = service.guardarVeterinaria(veterinaria);
 		if (aux == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
